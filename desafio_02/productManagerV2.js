@@ -9,6 +9,7 @@ class productManager {
 		this.products = [];
 	}
 
+	// Método privado para crear archivos
 	#createFile() {
 		const write = async () => {
 			try {
@@ -23,6 +24,7 @@ class productManager {
 		write();
 	}
 
+	// Método privado para leer archivos
 	#readFile() {
 		const read = async () => {
 			try {
@@ -41,16 +43,15 @@ class productManager {
 		return this.#id;
 	}
 
-	/**id (se debe incrementar automáticamente, no enviarse desde el cuerpo)
-title (nombre del producto)
-description (descripción del producto)
-price (precio)
-thumbnail (ruta de imagen)
-code (código identificador)
-stock (número de piezas disponibles)
- */
+	/** Método para agregar un producto
+	 * @param {string} title (nombre del producto)
+	 * @param {string} description (descripción del producto)
+	 * @param {number} price (precio del producto)
+	 * @param {string} thumbnail (ruta de la imagen del producto)
+	 * @param {string} code (código identificador único del producto)
+	 * @param {number} stock (número de piezas disponibles del producto)
+	 */
 
-	//Método para agregar un producto
 	addProduct(title, description, price, thumbnail, code, stock) {
 		//comienzo de método addProduct
 
