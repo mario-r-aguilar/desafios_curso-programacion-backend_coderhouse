@@ -1,47 +1,28 @@
 const fs = require('fs');
 
 class productManager {
-	//principio de clase
-	#id = 0;
-
 	constructor(path) {
 		this.path = path;
-		this.products = [];
+		fs.promises.writeFile(this.path, JSON.stringify([]));
 	}
-
-	// Método privado para crear archivos
-	#createFile() {
-		const write = async () => {
-			try {
-				fs.promises.writeFile(
-					`${this.path}`,
-					`${JSON.stringify(this.products)}`
-				);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		write();
-	}
-
+	#id = 0;
 	// Método privado para leer archivos
-	#readFile() {
-		const read = async () => {
-			try {
-				let reading = await fs.promises.readFile(`${this.path}`, 'utf-8');
-				console.log(JSON.parse(reading));
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		read();
-	}
+	#readFile = async () => {
+		const readProduct = await fs.promises.readFile(this.path, 'utf-8');
+		return JSON.parse(readProduct);
+	};
 
 	// Método privado para incrementar id automáticamente
 	#getId() {
 		this.#id++;
 		return this.#id;
 	}
+
+	// Método para mostrar lista de productos
+	getProducts = async () => {
+		let showProducts = await this.#readFile();
+		console.log(showProducts);
+	};
 
 	/** Método para agregar un producto
 	 * @param {string} title (nombre del producto)
@@ -52,26 +33,24 @@ class productManager {
 	 * @param {number} stock (número de piezas disponibles del producto)
 	 */
 
-	addProduct(title, description, price, thumbnail, code, stock) {
-		//comienzo de método addProduct
-
+	addProduct = async (title, description, price, thumbnail, code, stock) => {
 		// Valido que se hayan completado todos los campos
 		if (!title || !description || !price || !thumbnail || !code || !stock) {
 			console.log('Faltan datos. Por favor intente nuevamente');
 			return;
 		}
 
+		let products = await this.#readFile();
+
 		// Valido que no haya códigos duplicados
-		const duplicateCode = this.products.find(
-			(product) => product.code === code
-		);
+		const duplicateCode = products.find((product) => product.code === code);
 		if (duplicateCode) {
 			console.log('El código ya existe');
 			return;
 		}
 
 		// Creo el producto
-		const product = {
+		const newProduct = {
 			title,
 			description,
 			price,
@@ -81,30 +60,26 @@ class productManager {
 		};
 
 		// Genero id automáticamente y la agrego al producto
-		product.id = this.#getId();
+		newProduct.id = this.#getId();
 
 		// Agrego el producto a la lista de productos
-		this.products.push(product);
+		products.push(newProduct);
 
-		this.#createFile();
-		//final de método addProduct
-	}
+		await fs.promises.writeFile(this.path, JSON.stringify(products));
+	};
 
-	// Método para mostrar lista de productos
-	getProducts() {
-		this.#readFile();
-	}
+	// 	getProductById(id) {}
 
-	getProductById(id) {}
+	// 	updateProduct(id, field) {}
 
-	updateProduct(id, field) {}
+	// 	deleteProduct(id) {}
 
-	deleteProduct(id) {}
-
-	//final de clase
+	// 	//final de clase
 }
 
-// Pruebas
-const test = new productManager('./productos.txt');
+// // Pruebas
+const test = new productManager('./productos');
 test.addProduct('prueba', 'prueba', 200, 'sin imagen', 200, 200);
+// test.getProducts();
+test.addProduct('prueba2', 'prueba2', 300, 'sin imagen2', 300, 300);
 test.getProducts();
