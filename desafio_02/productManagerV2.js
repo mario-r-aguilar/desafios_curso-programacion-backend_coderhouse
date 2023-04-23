@@ -74,7 +74,7 @@ class productManager {
 		);
 		// Valido que el id exista y muestra un mensaje si no lo encuentra
 		if (findProductIndex === -1) {
-			console.log('Not found');
+			console.log('ID no encontrada');
 			return;
 		}
 		// Muestro el producto solicitado
@@ -124,6 +124,15 @@ class productManager {
 	deleteProduct = async (id) => {
 		//Almaceno contenido del archivo de productos en una variable
 		let products = await this.#readFile();
+		//Busco el índice del producto solicitado por id
+		const findProductIndex = await products.findIndex(
+			(product) => product.id === id
+		);
+		// Valido que el id exista y muestra un mensaje si no lo encuentra
+		if (findProductIndex === -1) {
+			console.log('ID no encontrada');
+			return;
+		}
 		//Creo un nuevo listado sin el producto eliminado
 		let productFilter = products.filter((products) => products.id != id);
 		//Agrego los productos al archivo de almacenamiento
@@ -132,48 +141,44 @@ class productManager {
 	};
 }
 
-// Pruebas
+// Pruebas solicitadas
+// Creo instancia
 const productList = new productManager('./productos');
-
 const test = async () => {
 	try {
+		// Muestro arreglo vacío
 		await productList.getProducts();
+		//Agrego producto
 		await productList.addProduct(
-			'celular a3',
-			'celular samsung ',
-			20000,
-			'sin imagen',
-			'SAMSUNG-A3',
-			200
+			'producto prueba',
+			'Este es un producto prueba',
+			200,
+			'Sin imagen',
+			'abc123',
+			25
 		);
-		await productList.addProduct(
-			'celular g6',
-			'celular motorola',
-			30000,
-			'sin imagen2',
-			'MOTOROLA-G6',
-			300
-		);
-		await productList.addProduct(
-			'celular iphone',
-			'celular iphone 14',
-			50000,
-			'sin imagen2',
-			'IPHONE-14',
-			500
-		);
+		//Muestro producto recién agregado
 		await productList.getProducts();
+		//Busco un producto por el ID
+		await productList.getProductById(1);
+		//Busco un producto inexistente para comprobar error
 		await productList.getProductById(2);
-		await productList.deleteProduct(3);
+		//Actualizo el campo code
 		await productList.updateProduct({
-			title: 'celular a3',
-			description: 'celular samsung ',
-			price: 100000,
-			thumbnail: 'sin imagen',
+			title: 'producto prueba',
+			description: 'Este es un producto prueba',
+			price: 200,
+			thumbnail: 'Sin imagen',
 			code: 'SAMSUNG-A3-NEW_PRICE',
-			stock: 200,
+			stock: 25,
 			id: 1,
 		});
+		//Muestro producto actualizado
+		await productList.getProducts();
+		//Elimino un producto
+		await productList.deleteProduct(1);
+		//Intento eliminar un producto inexistente
+		await productList.deleteProduct(2);
 	} catch (error) {
 		console.log('Revisar código');
 	}
