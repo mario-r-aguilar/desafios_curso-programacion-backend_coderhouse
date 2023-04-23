@@ -68,18 +68,57 @@ class productManager {
 		await fs.promises.writeFile(this.path, JSON.stringify(products));
 	};
 
-	// 	getProductById(id) {}
+	getProductById = async (id) => {
+		let products = await this.#readFile();
+
+		const findProductIndex = await products.findIndex(
+			(product) => product.id === id
+		);
+
+		// Valida que el id exista y muestra un mensaje si no lo encuentra
+		if (findProductIndex === -1) {
+			console.log('Not found');
+			return;
+		}
+
+		// Muestra el producto solicitado
+		const productFound = Object.entries(products[findProductIndex]);
+		console.log(`Producto Encontrado! 
+        ${productFound}`);
+	};
 
 	// 	updateProduct(id, field) {}
 
 	// 	deleteProduct(id) {}
-
-	// 	//final de clase
 }
 
-// // Pruebas
-const test = new productManager('./productos');
-test.addProduct('prueba', 'prueba', 200, 'sin imagen', 200, 200);
-// test.getProducts();
-test.addProduct('prueba2', 'prueba2', 300, 'sin imagen2', 300, 300);
-test.getProducts();
+// Pruebas
+const productList = new productManager('./productos');
+
+const test = async () => {
+	try {
+		await productList.getProducts();
+		await productList.addProduct(
+			'prueba',
+			'prueba',
+			200,
+			'sin imagen',
+			'CODE200',
+			200
+		);
+		await productList.addProduct(
+			'prueba2',
+			'prueba2',
+			300,
+			'sin imagen2',
+			'CODE300',
+			300
+		);
+		await productList.getProducts();
+		await productList.getProductById(2);
+	} catch (error) {
+		console.log('Revisar código');
+	}
+};
+
+test();
