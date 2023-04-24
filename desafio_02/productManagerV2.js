@@ -1,3 +1,4 @@
+const { log } = require('console');
 const fs = require('fs');
 
 class productManager {
@@ -78,9 +79,8 @@ class productManager {
 			return;
 		}
 		// Muestro el producto solicitado
-		const productFound = Object.entries(products[findProductIndex]);
-		console.log(`Producto Encontrado! 
-        ${productFound}`);
+		console.log('Producto Encontrado!');
+		console.log(products[findProductIndex]);
 	};
 
 	/** Método para actualizar los campos y valores de un producto
