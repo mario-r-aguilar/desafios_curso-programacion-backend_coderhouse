@@ -38,7 +38,7 @@ app.get('/products/:pid', async (req, res) => {
 		let obtenerID = await productList.getProductById(id);
 		// Valido que la id exista y muestro un mensaje de lo contrario
 		if (!obtenerID) {
-			res.send('ID no encontrada');
+			res.send({ Resultado: 'ID no encontrada' });
 		}
 		res.send(await obtenerID);
 	} catch (error) {
