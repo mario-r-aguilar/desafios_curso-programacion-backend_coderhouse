@@ -1,0 +1,92 @@
+[
+	{
+		"title": "Celular Samsung J5",
+		"description": "Este es un producto prueba",
+		"price": 20000,
+		"thumbnail": "Sin imagen",
+		"code": "Samsung-J5",
+		"stock": 20,
+		"id": 1
+	},
+	{
+		"title": "Celular Samsung J2",
+		"description": "Este es un producto prueba",
+		"price": 15000,
+		"thumbnail": "Sin imagen",
+		"code": "Samsung-J2",
+		"stock": 25,
+		"id": 2
+	},
+	{
+		"title": "Celular Motorola G7",
+		"description": "Este es un producto prueba",
+		"price": 25000,
+		"thumbnail": "Sin imagen",
+		"code": "Motorola-G7",
+		"stock": 30,
+		"id": 3
+	},
+	{
+		"title": "Celular Motorola G8",
+		"description": "Este es un producto prueba",
+		"price": 30000,
+		"thumbnail": "Sin imagen",
+		"code": "Motorola-G8",
+		"stock": 20,
+		"id": 4
+	},
+	{
+		"title": "Celular Motorola G9",
+		"description": "Este es un producto prueba",
+		"price": 50000,
+		"thumbnail": "Sin imagen",
+		"code": "Motorola-G9",
+		"stock": 40,
+		"id": 5
+	},
+	{
+		"title": "Celular Motorola G6",
+		"description": "Este es un producto prueba",
+		"price": 21000,
+		"thumbnail": "Sin imagen",
+		"code": "Motorola-G6",
+		"stock": 15,
+		"id": 6
+	},
+	{
+		"title": "Celular Samsung A10",
+		"description": "Este es un producto prueba",
+		"price": 51000,
+		"thumbnail": "Sin imagen",
+		"code": "Samsung-A10",
+		"stock": 35,
+		"id": 7
+	},
+	{
+		"title": "Celular Samsung A3",
+		"description": "Este es un producto prueba",
+		"price": 41000,
+		"thumbnail": "Sin imagen",
+		"code": "Samsung-A3",
+		"stock": 45,
+		"id": 8
+	},
+	{
+		"title": "Celular Iphone 12",
+		"description": "Este es un producto prueba",
+		"price": 200000,
+		"thumbnail": "Sin imagen",
+		"code": "Iphone-12",
+		"stock": 10,
+		"id": 9
+	},
+	{
+		"title": "Celular Iphone 13",
+		"description": "Este es un producto prueba",
+		"price": 300000,
+		"thumbnail": "Sin imagen",
+		"code": "Iphone-13",
+		"stock": 15,
+		"id": 10
+	}
+]
