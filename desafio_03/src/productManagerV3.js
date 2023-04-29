@@ -22,7 +22,7 @@ export default class productManager {
 	// Método para mostrar lista de productos
 	getProducts = async () => {
 		let showProducts = await this.#readFile();
-		console.log(showProducts);
+		return showProducts;
 	};
 
 	/** Método para agregar un producto
@@ -81,7 +81,7 @@ export default class productManager {
 		}
 		// Muestro el producto solicitado
 		console.log('Producto Encontrado!');
-		console.log(products[findProductIndex]);
+		return products[findProductIndex];
 	};
 
 	/** Método para actualizar los campos y valores de un producto
