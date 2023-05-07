@@ -55,8 +55,8 @@ productsRoutes.post('/', async (req, res) => {
 productsRoutes.put('/:pid', async (req, res) => {
 	try {
 		let id = req.params.pid;
-		let updateProduct = req.body;
-		res.send(await productList.updateProduct(id, updateProduct));
+		let product = req.body;
+		res.send(await productList.updateProduct(id, product));
 	} catch (error) {
 		console.log(error);
 	}

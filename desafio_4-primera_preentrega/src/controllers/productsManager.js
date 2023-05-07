@@ -17,10 +17,16 @@ export default class productsManager {
 		await fs.promises.writeFile(this.path, JSON.stringify(products));
 	};
 	// Método privado para incrementar id automáticamente
-	#getId() {
+	#generateId() {
 		this.#id++;
 		return this.#id;
 	}
+	// Método privado para validar Id
+	#validId = async (id) => {
+		let products = await this.#readFile();
+		return products.find((product) => product.id === id);
+	};
+
 	// Método para mostrar lista de productos
 	getProducts = async () => {
 		let showProducts = await this.#readFile();
@@ -46,105 +52,94 @@ export default class productsManager {
 		return products[findProductIndex];
 	};
 
-	/** Método para agregar un producto
-	 * @param {string} title (nombre del producto)
-	 * @param {string} description (descripción del producto)
-	 * @param {string} code (código identificador único del producto)
-	 * @param {number} price (precio del producto)
-	 * @param {boolean} status (estado del producto)
-	 * @param {number} stock (número de piezas disponibles del producto)
-	 * @param {string} category (categoría del producto)
-	 * @param {Array} thumbnails (rutas de las imagenes del producto - Campo no obligatorio)
-	 */
-	addProduct = async (
-		title,
-		description,
-		code,
-		price,
-		stock,
-		category,
-		thumbnails
-	) => {
-		// Valido que se hayan completado todos los campos
-
-		if (!title || !description || !code || !price || !stock || !category) {
-			return `Faltan datos!
-			
-			title: ${title} 
-			description: ${description} 
-			code: ${code} 
-			price: ${price} 
-			stock: ${stock} 
-			category: ${category}
-
-			Por favor intente nuevamente.
-			`;
-		}
-
-		//Almaceno contenido del archivo de productos en una variable
-		let products = await this.#readFile();
-		// Valido que no haya códigos duplicados
-		const duplicateCode = products.find((product) => product.code === code);
-		if (duplicateCode) {
-			return 'El código ya existe';
-		}
-		// Creo el producto
-		const newProduct = {
-			title,
-			description,
-			code,
-			price,
-			stock,
-			category,
-			thumbnails,
-		};
-		// Agrego la propiedad status
-		newProduct.status = true;
-		// Genero id automáticamente y la agrego al producto
-		newProduct.id = this.#getId();
-		// Agrego el producto a la variable de productos
-		products.push(newProduct);
-		//Agrego los productos al archivo de almacenamiento
-		this.#writeFile(products);
-	};
-
-	/** Método para actualizar los campos y valores de un producto
-	 * @param {object} object (Producto a modificar)
-	 */
-	updateProduct = async ({ id, ...product }) => {
-		//Valido que se incluyan todos los campos del producto que se ingresa
+	// Método para agregar un producto
+	addProduct = async (product) => {
+		// Valido que el objeto contenga las propiedades obligatorias
 		if (
-			!id ||
 			!product.title ||
 			!product.description ||
 			!product.code ||
 			!product.price ||
 			!product.status ||
 			!product.stock ||
-			!product.category ||
-			!product.thumbnails
+			!product.category
 		) {
-			return `Faltan campos en el producto ingresado. 
-			Recuerde que debe contar con la siguiente información: 
-			title,
-			description,
-			code,
-			price,
-			status, 
-			stock,
-			category,
-			thumbnails,
-			id`;
-		} else {
+			return `Faltan propiedades obligatorias en el producto!
+			
+			title: ${product.title} 
+			description: ${product.description} 
+			code: ${product.code} 
+			price: ${product.price} 
+			status: ${product.status}
+			stock: ${product.stock} 
+			category: ${product.category}
+
+			Solo la propiedad 'thumbnails' no es obligatoria. 
+			Por favor intente nuevamente.
+			`;
+		}
+
+		//Almaceno contenido del archivo de productos en una variable
+		let productsOld = await this.#readFile();
+		// Valido que no haya códigos duplicados
+		const duplicateCode = productsOld.find(
+			(product) => product.code === product.code
+		);
+		if (duplicateCode) {
+			return 'El código ya existe';
+		}
+		// Genero id automáticamente y la agrego al producto
+		product.id = this.#generateId();
+		// Creo el producto
+		const addNewProduct = [...productsOld, product];
+		//Agrego los productos al archivo de almacenamiento
+		this.#writeFile(addNewProduct);
+	};
+
+	/** Método para actualizar los campos y valores de un producto
+	 * @param {object} object (Producto a modificar)
+	 */
+	updateProduct = async (id, product) => {
+		// Valido si la id del producto existe
+		let validProduct = this.#validId(id);
+		if (!validProduct) {
+			return 'Producto no encontrado';
+		}
+		//Valido que se incluyan todos los campos obligatorios del producto
+		if (
+			product.title &&
+			product.description &&
+			product.code &&
+			product.price &&
+			product.status &&
+			product.stock &&
+			product.category
+		) {
 			//Elimino el producto a modificar
 			await this.deleteProduct(id);
 			//Guardo el listado de productos restantes en una variable
 			let beforeListProducts = await this.#readFile();
-			//Genero un nuevo listado de productos con el modificado y los que no se vieron afectados
-			let afterListProducts = [{ ...product, id }, ...beforeListProducts];
+			//Genero un nuevo listado de productos incluyendo el modificado
+			let afterListProducts = [
+				{ ...product, id: id },
+				...beforeListProducts,
+			];
 			//Agrego el nuevo listado al archivo de productos
-			this.writeFile(afterListProducts);
+			await this.writeFile(afterListProducts);
 			return 'Producto actualizado';
+		} else {
+			return `Faltan propiedades obligatorias en el producto ingresado. 
+
+		title: ${product.title} 
+		description: ${product.description} 
+		code: ${product.code} 
+		price: ${product.price} 
+		status: ${product.status}
+		stock: ${product.stock} 
+		category: ${product.category} 
+		
+		Solo la propiedad 'thumbnails' no es obligatoria. 
+		Por favor intente nuevamente.`;
 		}
 	};
 
