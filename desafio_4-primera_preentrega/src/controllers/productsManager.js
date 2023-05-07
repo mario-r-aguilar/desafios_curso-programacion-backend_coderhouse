@@ -24,7 +24,15 @@ export default class productsManager {
 	// Método privado para validar Id
 	#validId = async (id) => {
 		let products = await this.#readFile();
-		return products.find((product) => product.id === id);
+		const findProductIndex = await products.findIndex(
+			(product) => product.id === id
+		);
+		// Valido que el id exista y muestra un mensaje si no lo encuentra
+		if (findProductIndex === -1) {
+			return true;
+		} else {
+			return false;
+		}
 	};
 
 	// Método para mostrar lista de productos
@@ -101,46 +109,19 @@ export default class productsManager {
 	 */
 	updateProduct = async (id, product) => {
 		// Valido si la id del producto existe
-		let validProduct = this.#validId(id);
-		if (!validProduct) {
+		let validProduct = await this.#validId(id);
+		if (validProduct) {
 			return 'Producto no encontrado';
 		}
-		//Valido que se incluyan todos los campos obligatorios del producto
-		if (
-			product.title &&
-			product.description &&
-			product.code &&
-			product.price &&
-			product.status &&
-			product.stock &&
-			product.category
-		) {
-			//Elimino el producto a modificar
-			await this.deleteProduct(id);
-			//Guardo el listado de productos restantes en una variable
-			let beforeListProducts = await this.#readFile();
-			//Genero un nuevo listado de productos incluyendo el modificado
-			let afterListProducts = [
-				{ ...product, id: id },
-				...beforeListProducts,
-			];
-			//Agrego el nuevo listado al archivo de productos
-			await this.writeFile(afterListProducts);
-			return 'Producto actualizado';
-		} else {
-			return `Faltan propiedades obligatorias en el producto ingresado. 
-
-		title: ${product.title} 
-		description: ${product.description} 
-		code: ${product.code} 
-		price: ${product.price} 
-		status: ${product.status}
-		stock: ${product.stock} 
-		category: ${product.category} 
-		
-		Solo la propiedad 'thumbnails' no es obligatoria. 
-		Por favor intente nuevamente.`;
-		}
+		//Elimino el producto a modificar
+		await this.deleteProduct(id);
+		//Guardo el listado de productos restantes en una variable
+		let beforeListProducts = await this.#readFile();
+		//Genero un nuevo listado de productos incluyendo el modificado
+		let afterListProducts = [{ ...product, id: id }, ...beforeListProducts];
+		//Agrego el nuevo listado al archivo de productos
+		await this.#writeFile(afterListProducts);
+		return 'Producto actualizado';
 	};
 
 	/** Método para eliminar un producto por id

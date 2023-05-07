@@ -54,9 +54,9 @@ productsRoutes.post('/', async (req, res) => {
 //Actualizo un producto
 productsRoutes.put('/:pid', async (req, res) => {
 	try {
-		let id = req.params.pid;
-		let product = req.body;
-		res.send(await productList.updateProduct(id, product));
+		let id = parseInt(req.params.pid);
+		let newProduct = req.body;
+		res.send(await productList.updateProduct(id, newProduct));
 	} catch (error) {
 		console.log(error);
 	}
@@ -65,7 +65,7 @@ productsRoutes.put('/:pid', async (req, res) => {
 //Elimino un producto
 productsRoutes.delete('/:pid', async (req, res) => {
 	try {
-		let id = req.params.pid;
+		let id = parseInt(req.params.pid);
 		res.send(await productList.deleteProduct(id));
 	} catch (error) {
 		console.log(error);
