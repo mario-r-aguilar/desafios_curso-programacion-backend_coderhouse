@@ -1,12 +1,11 @@
 import fs from 'fs';
+import { nanoid } from 'nanoid';
 
 export default class productsManager {
 	constructor() {
 		this.path = './src/models/products.json';
 	}
 
-	//Variable privada del id de producto
-	#id = 0;
 	// Método privado para leer el archivo de productos
 	#readFile = async () => {
 		const readProduct = await fs.promises.readFile(this.path, 'utf-8');
@@ -16,11 +15,6 @@ export default class productsManager {
 	#writeFile = async (products) => {
 		await fs.promises.writeFile(this.path, JSON.stringify(products));
 	};
-	// Método privado para incrementar id automáticamente
-	#generateId() {
-		this.#id++;
-		return this.#id;
-	}
 	// Método privado para validar Id
 	#validId = async (id) => {
 		let products = await this.#readFile();
@@ -90,7 +84,7 @@ export default class productsManager {
 			return 'El código ya existe';
 		}
 		// Genero id automáticamente y la agrego al producto
-		product.id = this.#generateId();
+		product.id = nanoid();
 		// Creo el producto
 		const addNewProduct = [...productsOld, product];
 		//Agrego los productos al archivo de almacenamiento

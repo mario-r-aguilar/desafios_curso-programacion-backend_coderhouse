@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { nanoid } from 'nanoid';
 import productsManager from './productsManager.js';
 
 const listProductsToCart = new productsManager();
@@ -8,8 +9,6 @@ export default class cartsManager {
 		this.path = './src/models/carts.json';
 	}
 
-	//Variable privada del id de producto
-	#cid = 0;
 	// Método privado para leer el archivo de productos
 	#readFileCarts = async () => {
 		const readCart = await fs.promises.readFile(this.path, 'utf-8');
@@ -19,11 +18,6 @@ export default class cartsManager {
 	#writeFileCarts = async (carts) => {
 		await fs.promises.writeFile(this.path, JSON.stringify(carts));
 	};
-	// Método privado para incrementar id automáticamente
-	#generateIdCart() {
-		this.#cid++;
-		return this.#cid;
-	}
 	// Método privado para validar Id
 	#validIdCart = async (id) => {
 		let carts = await this.#readFileCarts();
@@ -40,7 +34,7 @@ export default class cartsManager {
 		const cart = {
 			products: [],
 		};
-		cart.id = this.#generateIdCart();
+		cart.id = nanoid();
 		listCarts.push(cart);
 		await this.#writeFileCarts(listCarts);
 		return listCarts;
