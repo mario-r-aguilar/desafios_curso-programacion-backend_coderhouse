@@ -6,7 +6,7 @@ import productsRoutes from './routes/productsRouter.js';
 import cartsRoutes from './routes/cartsRoutes.js';
 
 const app = express();
-const port = 8080; // Almaceno valor del puerto
+const port = 8080; // Almaceno valor del puerto que escuchará el servidor
 
 // Middlewares
 // Para interpretar mensajes de tipo JSON en formato urlencoded
