@@ -58,12 +58,11 @@ export default class cartsManager {
 	 * @param {number} id (Id del carrito)
 	 */
 	getCartById = async (id) => {
-		let carts = await this.#readFileCarts();
 		let validCart = await this.#validIdCart(id);
 		if (validCart === false) {
 			return 'Carrito no encontrado';
 		}
-		return carts[validCart]; // Retorna el carrito indicado
+		return validCart; // Retorna el carrito indicado
 	};
 
 	/** Agrega un producto a un carrito específico

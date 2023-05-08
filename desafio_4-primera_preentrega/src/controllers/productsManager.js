@@ -99,12 +99,17 @@ export default class productsManager {
 	 * @param {object} product (Producto con nuevos valores)
 	 */
 	updateProduct = async (id, product) => {
-		await this.#validId(id); // Valido si la id del producto existe
-		await this.deleteProduct(id); // Elimino del array al producto que deseo modificar
-		let beforeListProducts = await this.#readFile(); // Almaceno el resto de productos
+		await this.#validId(id); // Valido que la id del producto existe
+		let listProducts = await this.#readFile();
+
+		// Almaceno los productos sin el que voy a actualizar
+		let listWithoutProduct = listProducts.filter(
+			(product) => product.id != id
+		);
+
 		// Genero un nuevo array de productos incluyendo el modificado
-		let afterListProducts = [{ ...product, id: id }, ...beforeListProducts];
-		await this.#writeFile(afterListProducts);
+		let newListProducts = [...listWithoutProduct, { ...product, id: id }];
+		await this.#writeFile(newListProducts);
 		return 'Producto actualizado';
 	};
 

@@ -25,7 +25,7 @@ productsRoutes.get('/', async (req, res) => {
 // Ruta para obtener un producto mediante su id
 productsRoutes.get('/:pid', async (req, res) => {
 	try {
-		let id = parseInt(req.params.pid); // Configuro el tipo de valor id como un número
+		let id = req.params.pid;
 		let obtenerID = await productList.getProductById(id); // Obtengo el producto
 		// Valido que el producto exista y muestro un error de lo contrario
 		if (!obtenerID) {
@@ -50,7 +50,7 @@ productsRoutes.post('/', async (req, res) => {
 // Ruta para actualizar un producto
 productsRoutes.put('/:pid', async (req, res) => {
 	try {
-		let id = parseInt(req.params.pid); // Configuro el tipo de valor id como un número
+		let id = req.params.pid;
 		let newProduct = req.body; // Almaceno el producto actualizado que pasan por body
 		res.status(200).send(await productList.updateProduct(id, newProduct));
 	} catch (err) {
@@ -61,7 +61,7 @@ productsRoutes.put('/:pid', async (req, res) => {
 // Ruta para eliminar un producto
 productsRoutes.delete('/:pid', async (req, res) => {
 	try {
-		let id = parseInt(req.params.pid); // Configuro el tipo de valor id como un número
+		let id = req.params.pid;
 		res.status(200).send(await productList.deleteProduct(id));
 	} catch (err) {
 		res.status(400).send({ err });

@@ -17,7 +17,7 @@ cartsRoutes.post('/', async (req, res) => {
 // Ruta para obtener un carrito por su id
 cartsRoutes.get('/:cid', async (req, res) => {
 	try {
-		const cid = parseInt(req.params.cid); // Configuro el tipo de valor id como un número
+		const cid = req.params.cid;
 		let getID = await cartsList.getCartById(cid);
 		res.status(200).send(await getID);
 	} catch (err) {
@@ -28,9 +28,8 @@ cartsRoutes.get('/:cid', async (req, res) => {
 // Ruta para agregar un producto a un carrito existente
 cartsRoutes.post('/:cid/product/:pid', async (req, res) => {
 	try {
-		// Configuro los tipos de valor de las id como un número
-		const cid = parseInt(req.params.cid);
-		const pid = parseInt(req.params.pid);
+		const cid = req.params.cid;
+		const pid = req.params.pid;
 		res.status(201).send(await cartsList.addProductToCart(cid, pid));
 	} catch (err) {
 		res.status(400).send({ err });
