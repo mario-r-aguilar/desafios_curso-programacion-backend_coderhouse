@@ -6,7 +6,7 @@ export default class productsManager {
 	}
 
 	//Variable privada del id de producto
-	#pid = 0;
+	#id = 0;
 	// Método privado para leer el archivo de productos
 	#readFile = async () => {
 		const readProduct = await fs.promises.readFile(this.path, 'utf-8');
@@ -18,8 +18,8 @@ export default class productsManager {
 	};
 	// Método privado para incrementar id automáticamente
 	#generateId() {
-		this.#pid++;
-		return this.#pid;
+		this.#id++;
+		return this.#id;
 	}
 	// Método privado para validar Id
 	#validId = async (id) => {
@@ -29,9 +29,9 @@ export default class productsManager {
 		);
 		// Valido que el id exista y muestra un mensaje si no lo encuentra
 		if (findProductIndex === -1) {
-			return true;
+			return 'Producto no encontrado';
 		} else {
-			return false;
+			return findProductIndex;
 		}
 	};
 
@@ -48,15 +48,8 @@ export default class productsManager {
 		//Almaceno contenido del archivo de productos en una variable
 		let products = await this.#readFile();
 		//Busco el índice del producto solicitado por id
-		const findProductIndex = await products.findIndex(
-			(product) => product.id === id
-		);
-		// Valido que el id exista y muestra un mensaje si no lo encuentra
-		if (findProductIndex === -1) {
-			return 'ID no encontrada';
-		}
+		const findProductIndex = await this.#validId(id);
 		// Muestro el producto solicitado
-		console.log('Producto Encontrado!');
 		return products[findProductIndex];
 	};
 
@@ -110,10 +103,7 @@ export default class productsManager {
 	 */
 	updateProduct = async (id, product) => {
 		// Valido si la id del producto existe
-		let validProduct = await this.#validId(id);
-		if (validProduct) {
-			return 'Producto no encontrado';
-		}
+		await this.#validId(id);
 		//Elimino el producto a modificar
 		await this.deleteProduct(id);
 		//Guardo el listado de productos restantes en una variable
