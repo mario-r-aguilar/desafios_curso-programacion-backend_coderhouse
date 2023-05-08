@@ -6,7 +6,7 @@ export default class productsManager {
 	}
 
 	//Variable privada del id de producto
-	#id = 0;
+	#pid = 0;
 	// Método privado para leer el archivo de productos
 	#readFile = async () => {
 		const readProduct = await fs.promises.readFile(this.path, 'utf-8');
@@ -18,8 +18,8 @@ export default class productsManager {
 	};
 	// Método privado para incrementar id automáticamente
 	#generateId() {
-		this.#id++;
-		return this.#id;
+		this.#pid++;
+		return this.#pid;
 	}
 	// Método privado para validar Id
 	#validId = async (id) => {
@@ -90,8 +90,8 @@ export default class productsManager {
 		//Almaceno contenido del archivo de productos en una variable
 		let productsOld = await this.#readFile();
 		// Valido que no haya códigos duplicados
-		const duplicateCode = productsOld.find(
-			(product) => product.code === product.code
+		let duplicateCode = productsOld.find(
+			(newProduct) => newProduct.code === product.code
 		);
 		if (duplicateCode) {
 			return 'El código ya existe';
@@ -102,6 +102,7 @@ export default class productsManager {
 		const addNewProduct = [...productsOld, product];
 		//Agrego los productos al archivo de almacenamiento
 		this.#writeFile(addNewProduct);
+		return 'Producto agregado';
 	};
 
 	/** Método para actualizar los campos y valores de un producto
