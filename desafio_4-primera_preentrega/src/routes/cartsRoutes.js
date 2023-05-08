@@ -1,11 +1,11 @@
-// Importo Router
+// Importo Router y cartsManager para utilizar sus métodos
 import { Router } from 'express';
-// Importo administrador de carritos y sus métodos
 import cartsManager from '../controllers/cartsManager.js';
 
 const cartsRoutes = Router();
-const cartsList = new cartsManager();
+const cartsList = new cartsManager(); // Creo instancia de cartsManager
 
+// Ruta para agregar un nuevo carrito
 cartsRoutes.post('/', async (req, res) => {
 	try {
 		res.status(201).send(await cartsList.addCart());
@@ -14,6 +14,7 @@ cartsRoutes.post('/', async (req, res) => {
 	}
 });
 
+// Ruta para obtener un carrito por su id
 cartsRoutes.get('/:cid', async (req, res) => {
 	try {
 		const cid = parseInt(req.params.cid);
@@ -24,6 +25,7 @@ cartsRoutes.get('/:cid', async (req, res) => {
 	}
 });
 
+// Ruta para agregar un producto a un carrito existente
 cartsRoutes.post('/:cid/product/:pid', async (req, res) => {
 	try {
 		const cid = parseInt(req.params.cid);
