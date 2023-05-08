@@ -7,19 +7,31 @@ const cartsRoutes = Router();
 const cartsList = new cartsManager();
 
 cartsRoutes.post('/', async (req, res) => {
-	res.send(await cartsList.addCart());
+	try {
+		res.send(await cartsList.addCart());
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 cartsRoutes.get('/:cid', async (req, res) => {
-	const cid = parseInt(req.params.cid);
-	let getID = await cartsList.getCartById(cid);
-	res.send(await getID);
+	try {
+		const cid = parseInt(req.params.cid);
+		let getID = await cartsList.getCartById(cid);
+		res.send(await getID);
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 cartsRoutes.post('/:cid/product/:pid', async (req, res) => {
-	const cid = parseInt(req.params.cid);
-	const pid = parseInt(req.params.pid);
-	res.send(await cartsList.addProductToCart(cid, pid));
+	try {
+		const cid = parseInt(req.params.cid);
+		const pid = parseInt(req.params.pid);
+		res.send(await cartsList.addProductToCart(cid, pid));
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 export default cartsRoutes;
