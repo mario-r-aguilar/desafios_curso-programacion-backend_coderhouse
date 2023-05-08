@@ -14,13 +14,13 @@ productsRoutes.get('/', async (req, res) => {
 		let limit = parseInt(req.query.limit);
 		// Si el usuario ingresa un límite de resultados lo muestro, sino muestro la totalidad de productos
 		if (!limit) {
-			return res.send({ getProductList });
+			return res.status(200).send({ getProductList });
 		} else {
 			let productsLimit = getProductList.slice(0, limit);
-			res.send({ productsLimit });
+			res.status(200).send({ productsLimit });
 		}
-	} catch (error) {
-		console.log(error);
+	} catch (err) {
+		res.status(400).send({ err });
 	}
 });
 
@@ -33,11 +33,11 @@ productsRoutes.get('/:pid', async (req, res) => {
 		let obtenerID = await productList.getProductById(id);
 		// Valido que la id exista y muestro un mensaje de lo contrario
 		if (!obtenerID) {
-			res.send({ Resultado: 'ID no encontrada' });
+			res.status(400).send({ Resultado: 'ID no encontrada' });
 		}
-		res.send(await obtenerID);
-	} catch (error) {
-		console.log(error);
+		res.status(200).send(await obtenerID);
+	} catch (err) {
+		res.status(400).send({ err });
 	}
 });
 
@@ -45,9 +45,9 @@ productsRoutes.get('/:pid', async (req, res) => {
 productsRoutes.post('/', async (req, res) => {
 	try {
 		let newProduct = req.body;
-		res.send(await productList.addProduct(newProduct));
-	} catch (error) {
-		console.log(error);
+		res.status(201).send(await productList.addProduct(newProduct));
+	} catch (err) {
+		res.status(400).send({ err });
 	}
 });
 
@@ -56,9 +56,9 @@ productsRoutes.put('/:pid', async (req, res) => {
 	try {
 		let id = parseInt(req.params.pid);
 		let newProduct = req.body;
-		res.send(await productList.updateProduct(id, newProduct));
-	} catch (error) {
-		console.log(error);
+		res.status(200).send(await productList.updateProduct(id, newProduct));
+	} catch (err) {
+		res.status(400).send({ err });
 	}
 });
 
@@ -66,9 +66,9 @@ productsRoutes.put('/:pid', async (req, res) => {
 productsRoutes.delete('/:pid', async (req, res) => {
 	try {
 		let id = parseInt(req.params.pid);
-		res.send(await productList.deleteProduct(id));
-	} catch (error) {
-		console.log(error);
+		res.status(200).send(await productList.deleteProduct(id));
+	} catch (err) {
+		res.status(400).send({ err });
 	}
 });
 

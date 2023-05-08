@@ -8,9 +8,9 @@ const cartsList = new cartsManager();
 
 cartsRoutes.post('/', async (req, res) => {
 	try {
-		res.send(await cartsList.addCart());
-	} catch (error) {
-		console.log(error);
+		res.status(201).send(await cartsList.addCart());
+	} catch (err) {
+		res.status(400).send({ err });
 	}
 });
 
@@ -18,9 +18,9 @@ cartsRoutes.get('/:cid', async (req, res) => {
 	try {
 		const cid = parseInt(req.params.cid);
 		let getID = await cartsList.getCartById(cid);
-		res.send(await getID);
-	} catch (error) {
-		console.log(error);
+		res.status(200).send(await getID);
+	} catch (err) {
+		res.status(400).send({ err });
 	}
 });
 
@@ -28,9 +28,9 @@ cartsRoutes.post('/:cid/product/:pid', async (req, res) => {
 	try {
 		const cid = parseInt(req.params.cid);
 		const pid = parseInt(req.params.pid);
-		res.send(await cartsList.addProductToCart(cid, pid));
-	} catch (error) {
-		console.log(error);
+		res.status(201).send(await cartsList.addProductToCart(cid, pid));
+	} catch (err) {
+		res.status(400).send({ err });
 	}
 });
 
