@@ -51,7 +51,7 @@ export default class cartsManager {
 		cart.id = nanoid(); // Genera id automáticamente
 		listCarts.push(cart);
 		await this.#writeFileCarts(listCarts);
-		return listCarts; // Retorna el array de carritos incluyendo el nuevo carrito agregado
+		return listCarts; // Retorna el array de carritos incluyendo el nuevo
 	};
 
 	/** Busca carrito por id

@@ -1,3 +1,4 @@
+// Importo fs, nanoid (para generar id automáticamente)
 import fs from 'fs';
 import { nanoid } from 'nanoid';
 
@@ -6,48 +7,49 @@ export default class productsManager {
 		this.path = './src/models/products.json';
 	}
 
-	// Método privado para leer el archivo de productos
+	// Metodos privados
+	/** Lee el archivo de productos */
 	#readFile = async () => {
 		const readProduct = await fs.promises.readFile(this.path, 'utf-8');
 		return JSON.parse(readProduct);
 	};
-	// Método privado para escribir el archivo de productos
+
+	/** Escribe el archivo de productos */
 	#writeFile = async (products) => {
 		await fs.promises.writeFile(this.path, JSON.stringify(products));
 	};
-	// Método privado para validar Id
+
+	/** Valida que la id del producto exista */
 	#validId = async (id) => {
 		let products = await this.#readFile();
 		const findProductIndex = await products.findIndex(
 			(product) => product.id === id
 		);
-		// Valido que el id exista y muestra un mensaje si no lo encuentra
+		// Valido que el id exista y muestro un mensaje si no lo encuentra
 		if (findProductIndex === -1) {
 			return 'Producto no encontrado';
 		} else {
-			return findProductIndex;
+			return findProductIndex; // Retorno el indice del producto en el array
 		}
 	};
 
-	// Método para mostrar lista de productos
+	// Métodos públicos
+	/** Muestra lista de productos */
 	getProducts = async () => {
 		let showProducts = await this.#readFile();
 		return showProducts;
 	};
 
-	/** Método para buscar un producto por id
+	/** Busca un producto por id y lo muestra
 	 * @param {number} id (Id del producto)
 	 */
 	getProductById = async (id) => {
-		//Almaceno contenido del archivo de productos en una variable
 		let products = await this.#readFile();
-		//Busco el índice del producto solicitado por id
-		const findProductIndex = await this.#validId(id);
-		// Muestro el producto solicitado
-		return products[findProductIndex];
+		const findProductIndex = await this.#validId(id); //Busco el índice del producto solicitado
+		return products[findProductIndex]; // Retorno el producto solicitado
 	};
 
-	// Método para agregar un producto
+	/** Agrega un producto */
 	addProduct = async (product) => {
 		// Valido que el objeto contenga las propiedades obligatorias
 		if (
@@ -74,8 +76,8 @@ export default class productsManager {
 			`;
 		}
 
-		//Almaceno contenido del archivo de productos en una variable
 		let productsOld = await this.#readFile();
+
 		// Valido que no haya códigos duplicados
 		let duplicateCode = productsOld.find(
 			(newProduct) => newProduct.code === product.code
@@ -83,45 +85,39 @@ export default class productsManager {
 		if (duplicateCode) {
 			return 'El código ya existe';
 		}
+
 		// Genero id automáticamente y la agrego al producto
 		product.id = nanoid();
 		// Creo el producto
 		const addNewProduct = [...productsOld, product];
-		//Agrego los productos al archivo de almacenamiento
 		this.#writeFile(addNewProduct);
-		return 'Producto agregado';
+		return 'Producto agregado'; // Retorno el array de productos incluyendo el nuevo
 	};
 
-	/** Método para actualizar los campos y valores de un producto
-	 * @param {object} object (Producto a modificar)
+	/** Actualiza valores de un producto
+	 * @param {number} id (Id del producto)
+	 * @param {object} product (Producto con nuevos valores)
 	 */
 	updateProduct = async (id, product) => {
-		// Valido si la id del producto existe
-		await this.#validId(id);
-		//Elimino el producto a modificar
-		await this.deleteProduct(id);
-		//Guardo el listado de productos restantes en una variable
-		let beforeListProducts = await this.#readFile();
-		//Genero un nuevo listado de productos incluyendo el modificado
+		await this.#validId(id); // Valido si la id del producto existe
+		await this.deleteProduct(id); // Elimino del array al producto que deseo modificar
+		let beforeListProducts = await this.#readFile(); // Almaceno el resto de productos
+		// Genero un nuevo array de productos incluyendo el modificado
 		let afterListProducts = [{ ...product, id: id }, ...beforeListProducts];
-		//Agrego el nuevo listado al archivo de productos
 		await this.#writeFile(afterListProducts);
 		return 'Producto actualizado';
 	};
 
-	/** Método para eliminar un producto por id
+	/** Elimina un producto
 	 * @param {number} id (Id del producto)
 	 */
 	deleteProduct = async (id) => {
-		//Almaceno contenido del archivo de productos en una variable
 		let products = await this.#readFile();
-		//Busco el producto solicitado por id en el array
+		//Busco el producto solicitado en el array
 		const findProduct = await products.some((product) => product.id === id);
-		// Valido que el id exista y muestra un mensaje si no lo encuentra
+		// Si lo encuentra lo elimina y genera un nuevo array sin él. Si no lo hace, retorna un error
 		if (findProduct) {
-			//Creo un nuevo listado sin el producto eliminado
 			let productFilter = products.filter((product) => product.id != id);
-			//Agrego los productos al archivo de almacenamiento
 			this.#writeFile(productFilter);
 			return 'Producto Eliminado';
 		}
