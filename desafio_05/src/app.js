@@ -34,8 +34,9 @@ const serverExpress = app.listen(port, () =>
 );
 const io = new Server(serverExpress);
 
-io.on('conection', (socket) => {
+io.on('connection', (socket) => {
 	console.log('Cliente conectado...');
 	//socket.emit('product_list', 'productList');
-	//socket.emit('product_list_update', 'productListUpdate');
 });
+
+export default io;
