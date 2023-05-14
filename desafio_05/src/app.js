@@ -33,6 +33,9 @@ const serverExpress = app.listen(port, () =>
 	console.log('Server Express Listening...')
 );
 const io = new Server(serverExpress);
+
 io.on('conection', (socket) => {
-	console.log('Websocket Listening...');
+	console.log('Cliente conectado...');
+	//socket.emit('product_list', 'productList');
+	//socket.emit('product_list_update', 'productListUpdate');
 });
