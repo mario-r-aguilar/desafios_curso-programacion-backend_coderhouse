@@ -8,8 +8,12 @@ viewsRoutes.get('/', async (req, res) => {
 	res.render('home', { tittle: 'Lista de Productos', products: productsList });
 });
 
-viewsRoutes.get('/realtimeproducts', (req, res) => {
-	res.render('realTimeProducts', { tittle: 'Productos en tiempo real' });
+viewsRoutes.get('/realtimeproducts', async (req, res) => {
+	const productsList = await listOfProducts.getProducts();
+	res.render('realTimeProducts', {
+		tittle: 'Productos en tiempo real',
+		products: productsList,
+	});
 });
 
 export default viewsRoutes;

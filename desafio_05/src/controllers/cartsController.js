@@ -56,10 +56,7 @@ export default class CartsController {
 	 */
 	getCartById = async (id) => {
 		let validCart = await this.#validIdCart(id);
-		if (validCart === false) {
-			return 'Carrito no encontrado';
-		}
-		return validCart; // Retorna el carrito indicado
+		return validCart || 'Carrito no encontrado'; // Retorna el carrito buscado o un error si no lo encontró
 	};
 
 	/** Agrega un producto a un carrito específico
@@ -69,11 +66,11 @@ export default class CartsController {
 	addProductToCart = async (cid, pid) => {
 		// Valida id del carrito y del producto
 		let validCart = await this.#validIdCart(cid);
-		if (validCart === false) {
+		if (!validCart) {
 			return 'Carrito no encontrado';
 		}
 		let validProduct = await this.#validIdProduct(pid);
-		if (validProduct === false) {
+		if (!validProduct) {
 			return 'Producto no encontrado';
 		}
 
