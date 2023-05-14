@@ -1,7 +1,6 @@
 // Importo Router y productsManager para utilizar sus métodos
 import { Router } from 'express';
 import { listOfProducts } from '../utils/instances.js';
-import io from '../app.js';
 
 const productsRoutes = Router();
 
@@ -42,7 +41,6 @@ productsRoutes.post('/', async (req, res) => {
 	try {
 		let newProduct = req.body; // Almaceno el producto que pasan por body
 		res.status(201).send(await listOfProducts.addProduct(newProduct));
-		io.emit('product_list_update', listOfProducts.getProducts());
 	} catch (err) {
 		res.status(400).send({ err });
 	}
@@ -54,7 +52,6 @@ productsRoutes.put('/:pid', async (req, res) => {
 		let id = req.params.pid;
 		let newProduct = req.body; // Almaceno el producto actualizado que pasan por body
 		res.status(200).send(await listOfProducts.updateProduct(id, newProduct));
-		io.emit('product_list_update', listOfProducts.getProducts());
 	} catch (err) {
 		res.status(400).send({ err });
 	}
@@ -65,7 +62,6 @@ productsRoutes.delete('/:pid', async (req, res) => {
 	try {
 		let id = req.params.pid;
 		res.status(200).send(await listOfProducts.deleteProduct(id));
-		io.emit('product_list_update', listOfProducts.getProducts());
 	} catch (err) {
 		res.status(400).send({ err });
 	}

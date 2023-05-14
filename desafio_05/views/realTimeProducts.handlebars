@@ -1,5 +1,23 @@
 <div>
+
 	<h1>Real Time Products</h1>
+
+	<div id='container'>
+		<h2>Lista de Productos</h2>
+		<div id='listOfProducts'>
+			{{#each products}}
+				<h3>{{this.title}}</h3>
+				<p>{{this.description}}</p>
+				<p>{{this.code}}</p>
+				<p>{{this.price}}</p>
+				<p>{{this.stock}}</p>
+				<p>{{this.category}}</p>
+				{{#if this.thumbnails}}
+					<p>{{this.thumbnails}}</p>
+				{{/if}}
+			{{/each}}
+		</div>
+	</div>
 
 </div>
 

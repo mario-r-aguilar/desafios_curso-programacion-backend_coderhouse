@@ -38,5 +38,3 @@ io.on('connection', (socket) => {
 	console.log('Cliente conectado...');
 	//socket.emit('product_list', 'productList');
 });
-
-export default io;
