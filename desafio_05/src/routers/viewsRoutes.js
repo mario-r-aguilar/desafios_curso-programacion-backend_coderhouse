@@ -3,8 +3,8 @@ import { listOfProducts } from '../utils/instances.js';
 
 const viewsRoutes = Router();
 
-viewsRoutes.get('/', (req, res) => {
-	const productsList = listOfProducts.getProducts();
+viewsRoutes.get('/', async (req, res) => {
+	const productsList = await listOfProducts.getProducts();
 	res.render('home', { tittle: 'Lista de Productos', products: productsList });
 });
 
