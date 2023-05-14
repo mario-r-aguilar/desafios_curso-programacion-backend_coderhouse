@@ -1,9 +1,8 @@
 // Importo Router y productsManager para utilizar sus métodos
 import { Router } from 'express';
-import listOfProducts from '../utils/instances.js';
+import { listOfProducts } from '../utils/instances.js';
 
 const productsRoutes = Router();
-const listOfProducts = new productsManager(); // Creo instancia de productsManager
 
 // Ruta para obtener el listado de productos
 productsRoutes.get('/', async (req, res) => {

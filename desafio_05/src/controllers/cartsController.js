@@ -1,7 +1,7 @@
 // Importo fs, nanoid (para generar id automáticamente) y la instancia de ProductsController (para utilizar sus métodos)
 import fs from 'fs';
 import { nanoid } from 'nanoid';
-import listOfProducts from '../utils/instances.js';
+import { listOfProducts } from '../utils/instances.js';
 
 export default class CartsController {
 	constructor() {
