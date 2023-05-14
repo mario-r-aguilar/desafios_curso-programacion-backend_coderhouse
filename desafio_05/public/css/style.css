@@ -7,10 +7,7 @@ body {
 	background-color: rgb(54, 125, 138);
 }
 
-h1 {
-	margin: 2rem;
-}
-
+h1,
 h2,
 h3,
 p {
