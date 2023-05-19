@@ -11,5 +11,36 @@ h1,
 h2,
 h3,
 p {
+	display: inline-block;
+	margin-bottom: 1rem;
+	margin-left: 1rem;
+}
+
+.containerProductsAndForm {
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	width: 100%;
+}
+
+.containerProducts {
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	width: 80%;
+}
+.product {
 	margin: 1rem;
+	border: 1px rgb(0, 0, 0) solid;
+}
+
+.formItem {
+	display: block;
+	margin-bottom: 0.5rem;
+	margin-left: 1rem;
+}
+
+.buttonRealTime {
+	margin: 1rem 0 2rem 1rem;
+	width: 30%;
 }

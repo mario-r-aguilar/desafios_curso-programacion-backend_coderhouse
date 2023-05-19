@@ -1,10 +1,30 @@
-<div>
+<div class='mainContainer'>
+	<h1 class='mainTitle'>Real Time Products</h1>
 
-	<h1>Real Time Products</h1>
+	<div class='containerProductsAndForm'>
 
-	<div id='container'>
-		<h2>Lista de Productos</h2>
-		<div id='listOfProducts'>
+		<div class='containerProducts'>
+			<div class='listOfProducts' id='listOfProducts'>
+			</div>
+		</div>
+
+		<div class='containerForm'>
+			<button
+				type='button'
+				class='buttonRealTime'
+				id='addProductButton'
+				onclick='addProductForm()'
+			>Agregar producto</button>
+			<button
+				type='button'
+				class='buttonRealTime'
+				id='deleteProductButton'
+				onclick='deleteProductForm()'
+			>Quitar producto</button>
+			<div class='selectForm'>
+			</div>
+			<div class='form' id='form'>
+			</div>
 		</div>
 	</div>
 
