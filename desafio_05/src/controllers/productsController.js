@@ -114,7 +114,7 @@ export default class ProductsController {
 	};
 
 	/** Elimina un producto
-	 * @param {number} id (Id del producto)
+	 * @param {string} id (Id del producto)
 	 */
 	deleteProduct = async (id) => {
 		let products = await this.#readFile();
