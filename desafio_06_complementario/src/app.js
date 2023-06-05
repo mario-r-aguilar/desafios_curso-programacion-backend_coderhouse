@@ -2,15 +2,17 @@
 import express from 'express';
 import { server, app } from './utils/socket.js';
 import handlebars from 'express-handlebars';
+import mongoose from 'mongoose';
 
-// importo rutas fs
+// importo rutas fs [solo habilitar si las rutas de mongodb están comentadas]
 //import productsRoutes from './routes/productsRoutes.js';
 //import cartsRoutes from './routes/cartsRoutes.js';
-import viewsRoutes from './routes/viewsRoutes.js';
+//import viewsRoutes from './routes/viewsRoutes.js';
 
 // importo rutas mongodb
 import productsRouter from './routes/products.routes.js';
 import cartsRouter from './routes/carts.routes.js';
+import messagesRouter from './routes/messages.routes.js';
 import viewsRouter from './routes/views.routes.js';
 
 // seteo middlewares obligatorios
@@ -33,7 +35,12 @@ app.use(express.static('public/'));
 // rutas mongodb
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
+app.use('/api/chat', messagesRouter);
 app.use('/', viewsRouter);
+
+mongoose.connect(
+	'mongodb+srv://ecommerce:UPSPro802@ecommerce.hebknry.mongodb.net/?retryWrites=true&w=majority'
+);
 
 // inicializo servidor
 const port = 8080;
