@@ -5,10 +5,10 @@ const viewsRouter = Router();
 
 viewsRouter.get('/', async (req, res) => {
 	try {
-		const products = await productsService.getAllProductsMdb();
+		const productsMdb = await productsService.getAllProductsMdb();
 		res.render('products', {
 			title: 'Lista de Productos',
-			products: products,
+			productsMdb: productsMdb,
 		});
 	} catch (err) {
 		res.status(500).send({ err });
