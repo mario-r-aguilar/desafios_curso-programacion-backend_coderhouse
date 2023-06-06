@@ -6,12 +6,16 @@ class CartsService {
 		this.model = cartModel;
 	}
 
-	async addCartMdb() {
-		return await this.model.create();
+	async getCartsAll() {
+		return await this.model.find();
 	}
 
 	async getCartByIdMdb(cartId) {
-		return await this.model.findOne(cartId);
+		return await this.model.findById(cartId);
+	}
+
+	async addCartMdb(cart) {
+		return await this.model.create(cart);
 	}
 
 	async addProductToCartMdb(cartId, productId) {
