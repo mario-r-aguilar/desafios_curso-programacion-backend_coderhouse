@@ -38,9 +38,9 @@ app.use('/api/carts', cartsRouter);
 app.use('/api/chat', messagesRouter);
 app.use('/', viewsRouter);
 
-mongoose.connect(
-	'mongodb+srv://ecommerce:UPSPro802@ecommerce.hebknry.mongodb.net/?retryWrites=true&w=majority'
-);
+const mongoDb =
+	'mongodb+srv://ecommerce:UPSPro802@ecommerce.hebknry.mongodb.net/ecommerce';
+await mongoose.connect(mongoDb);
 
 // inicializo servidor
 const port = 8080;

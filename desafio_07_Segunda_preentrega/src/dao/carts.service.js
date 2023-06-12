@@ -10,17 +10,17 @@ class CartsService {
 		return await this.model.find();
 	}
 
-	async getCartById(cartId) {
+	async getCartByIdMdb(cartId) {
 		return await this.model.findById(cartId);
 	}
 
-	async addCart(cart) {
+	async addCartMdb(cart) {
 		return await this.model.create(cart);
 	}
 
-	async addProductToCart(cartId, productId) {
+	async addProductToCartMdb(cartId, productId) {
 		const cart = await this.model.findOne({ _id: cartId });
-		const product = await productsService.getProductByID(productId);
+		const product = await productsService.getProductByIDMdb(productId);
 		cart.products.push(product);
 		return await cart.save();
 	}

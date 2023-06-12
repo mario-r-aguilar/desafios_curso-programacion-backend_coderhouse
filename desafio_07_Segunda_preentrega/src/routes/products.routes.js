@@ -1,13 +1,22 @@
 import { Router } from 'express';
-import { productsService } from '../dao/products/products.service.js';
+import { productsService } from '../dao/products.service.js';
 import { io } from '../utils/socket.js';
 
 const productsRouter = Router();
 
 productsRouter.get('/', async (req, res) => {
 	try {
-		const products = await productsService.getAllProducts();
-		res.send(products);
+		const { limit, page, sort, category, availability } = req.query;
+		const products = await productsService.getAllProductsMdb(
+			limit,
+			page,
+			sort,
+			category,
+			availability
+		);
+		const status = (await products.docs.length) !== 0 ? 'success' : 'error';
+		const result = { status: status, ...products };
+		res.send(result);
 	} catch (err) {
 		res.status(500).send({ err });
 	}
@@ -16,7 +25,7 @@ productsRouter.get('/', async (req, res) => {
 productsRouter.get('/:pid', async (req, res) => {
 	const pid = req.params.pid;
 	try {
-		const product = await productsService.getProductByID(pid);
+		const product = await productsService.getProductByIDMdb(pid);
 		res.send(product);
 	} catch (err) {
 		res.status(500).send({ err });
@@ -26,9 +35,12 @@ productsRouter.get('/:pid', async (req, res) => {
 productsRouter.post('/', async (req, res) => {
 	const product = req.body;
 	try {
-		const productAdd = await productsService.addProduct(product);
+		const productAdd = await productsService.addProductMdb(product);
 		res.send(productAdd);
-		io.emit('product_list_updated', await productsService.getAllProducts());
+		io.emit(
+			'product_list_updated',
+			await productsService.getAllProductsMdb()
+		);
 	} catch (err) {
 		res.status(500).send({ err });
 	}
@@ -37,7 +49,7 @@ productsRouter.post('/', async (req, res) => {
 productsRouter.put('/:pid', async (req, res) => {
 	const pid = req.params.pid;
 	try {
-		const product = await productsService.updateProduct(pid, req.body);
+		const product = await productsService.updateProductMdb(pid, req.body);
 		res.status(201).send(product);
 	} catch (err) {
 		res.status(500).send({ err });
@@ -47,9 +59,12 @@ productsRouter.put('/:pid', async (req, res) => {
 productsRouter.delete('/:pid', async (req, res) => {
 	const pid = req.params.pid;
 	try {
-		await productsService.deleteProduct(pid);
+		await productsService.removeProductMdb(pid);
 		res.sendStatus(204);
-		io.emit('product_list_updated', await productsService.getAllProducts());
+		io.emit(
+			'product_list_updated',
+			await productsService.getAllProductsMdb()
+		);
 	} catch (err) {
 		res.status(500).send({ err });
 	}
