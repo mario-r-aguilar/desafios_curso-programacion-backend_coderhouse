@@ -6,16 +6,17 @@ const productsRouter = Router();
 
 productsRouter.get('/', async (req, res) => {
 	try {
-		const { limit, page, sort, category, availability } = req.query;
+		const { limit, page, sort, category, status } = req.query;
 		const products = await productsService.getAllProductsMdb(
 			limit,
 			page,
 			sort,
 			category,
-			availability
+			status
 		);
-		const status = (await products.docs.length) !== 0 ? 'success' : 'error';
-		const result = { status: status, ...products };
+		const statusDocs =
+			(await products.docs.length) !== 0 ? 'success' : 'error';
+		const result = { status: statusDocs, ...products };
 		res.send(result);
 	} catch (err) {
 		res.status(500).send({ err });

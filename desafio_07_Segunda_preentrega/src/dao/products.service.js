@@ -10,7 +10,7 @@ class ProductsService {
 		page = 1,
 		sort,
 		category = false,
-		availability = false
+		status
 	) {
 		let filter = {};
 
@@ -18,8 +18,8 @@ class ProductsService {
 			filter.category = category;
 		}
 
-		if (availability) {
-			filter.availability = availability;
+		if (status) {
+			filter.status = status;
 		}
 
 		return await this.model.paginate(filter, {

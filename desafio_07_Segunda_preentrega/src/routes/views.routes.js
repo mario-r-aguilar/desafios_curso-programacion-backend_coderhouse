@@ -6,13 +6,13 @@ const viewsRouter = Router();
 
 viewsRouter.get('/', async (req, res) => {
 	try {
-		const { limit, page, sort, category, availability } = req.query;
+		const { limit, page, sort, category, status } = req.query;
 		const productsMdb = await productsService.getAllProductsMdb(
 			limit,
 			page,
 			sort,
 			category,
-			availability
+			status
 		);
 
 		res.render('home', productsMdb);
