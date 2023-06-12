@@ -1,0 +1,15 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: rgb(54, 125, 138);
+}
+
+h1,
+h2,
+h3,
+p {
+	margin: 1rem;
+}

@@ -1,0 +1,14 @@
+<div id='historial'>
+	{{#if messages}}
+		<div>
+			{{messages}}
+		</div>
+	{{/if}}
+</div>
+<form action='/api/chat' method='post'>
+	<input type='text' id='message' />
+	<button id='send' type='submit' onclick='sendMenssage()'>Enviar</button>
+</form>
+
+<script src='/socket.io/socket.io.js'></script>
+<script src='/js/chat.js'></script>

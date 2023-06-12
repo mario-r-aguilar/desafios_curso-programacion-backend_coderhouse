@@ -1,0 +1,23 @@
+<div>
+	<h1>Lista de Productos</h1>
+	{{#if products}}
+		{{#each products}}
+			<h2>{{this.title}}</h2>
+			<p>{{this.description}}</p>
+			<p>{{this.code}}</p>
+			<p>{{this.price}}</p>
+			<p>{{this.stock}}</p>
+			<p>{{this.category}}</p>
+			{{#if this.thumbnails}}
+				<p>{{this.thumbnails}}</p>
+			{{/if}}
+		{{/each}}
+	{{/if}}
+	{{#if productsMdb}}
+		<div>
+			{{productsMdb}}
+		</div>
+	{{else}}
+		<h3>Aún no se han agregado productos</h3>
+	{{/if}}
+</div>
