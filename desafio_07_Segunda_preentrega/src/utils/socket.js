@@ -16,7 +16,7 @@ io.on('connection', async (socket) => {
 
 	// usar con fs [solo habilitar si no se utiliza mongodb]
 	//socket.emit('product_list', await listOfProducts.getProducts());
-	socket.emit('product_list', await productsService.getAllProductsMdb());
+	socket.emit('product_list', await productsService.getProducts());
 	socket.emit('messages_init', messagesService.getAllMessages());
 
 	socket.on('disconnect', () => {

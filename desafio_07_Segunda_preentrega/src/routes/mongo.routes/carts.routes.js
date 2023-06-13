@@ -17,7 +17,7 @@ cartsRouter.get('/:cid', async (req, res) => {
 	const cid = req.params.cid;
 
 	try {
-		const cart = await cartsService.getCartByIdMdb(cid).populate('products');
+		const cart = await cartsService.getCartById(cid).populate('products');
 		res.send(cart);
 	} catch (err) {
 		res.status(500).send({ err });
@@ -27,7 +27,7 @@ cartsRouter.get('/:cid', async (req, res) => {
 cartsRouter.post('/', async (req, res) => {
 	const cart = req.body;
 	try {
-		const cartAdded = await cartsService.addCartMdb(cart);
+		const cartAdded = await cartsService.addCart(cart);
 		res.send(cartAdded);
 	} catch (err) {
 		res.status(500).send({ err });
@@ -38,12 +38,12 @@ cartsRouter.post('/:cid/product/:pid', async (req, res) => {
 	const cid = req.params.cid;
 	const pid = req.params.pid;
 	try {
-		const product = await productsService.getProductByIDMdb(pid);
+		const product = await productsService.getProductByID(pid);
 		if (!product) {
 			return res.status(404).send({ error: 'Product not found' });
 		}
 
-		const cartUpdated = await cartsService.addProductToCartMdb(cid, product);
+		const cartUpdated = await cartsService.addProductToCart(cid, product);
 		res.status(201).send(cartUpdated);
 	} catch (err) {
 		res.status(500).send({ err });
@@ -55,10 +55,7 @@ cartsRouter.put('/:cid', async (req, res) => {
 	const products = req.body;
 
 	try {
-		const cartUpdated = await cartsService.updateCartProductsMdb(
-			cid,
-			products
-		);
+		const cartUpdated = await cartsService.updateCartProducts(cid, products);
 		res.send(cartUpdated);
 	} catch (err) {
 		res.status(500).send({ err });
@@ -71,7 +68,7 @@ cartsRouter.put('/:cid/products/:pid', async (req, res) => {
 	const quantity = req.body.quantity;
 
 	try {
-		const cartUpdated = await cartsService.updateProductQuantityMdb(
+		const cartUpdated = await cartsService.updateProductQuantity(
 			cid,
 			pid,
 			quantity
@@ -87,7 +84,7 @@ cartsRouter.delete('/:cid/products/:pid', async (req, res) => {
 	const pid = req.params.pid;
 
 	try {
-		const cartUpdated = await cartsService.removeProductFromCartMdb(cid, pid);
+		const cartUpdated = await cartsService.removeProductFromCart(cid, pid);
 		res.send(cartUpdated);
 	} catch (err) {
 		res.status(500).send({ err });
@@ -98,7 +95,7 @@ cartsRouter.delete('/:cid', async (req, res) => {
 	const cid = req.params.cid;
 
 	try {
-		const cartDeleted = await cartsService.deleteCartMdb(cid);
+		const cartDeleted = await cartsService.deleteCart(cid);
 		res.send(cartDeleted);
 	} catch (err) {
 		res.status(500).send({ err });

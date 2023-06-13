@@ -7,7 +7,7 @@ const productsRouter = Router();
 productsRouter.get('/', async (req, res) => {
 	try {
 		const { limit, page, sort, category, status } = req.query;
-		const products = await productsService.getAllProductsMdb(
+		const products = await productsService.getProducts(
 			limit,
 			page,
 			sort,
@@ -26,7 +26,7 @@ productsRouter.get('/', async (req, res) => {
 productsRouter.get('/:pid', async (req, res) => {
 	const pid = req.params.pid;
 	try {
-		const product = await productsService.getProductByIDMdb(pid);
+		const product = await productsService.getProductByID(pid);
 		res.send(product);
 	} catch (err) {
 		res.status(500).send({ err });
@@ -36,12 +36,9 @@ productsRouter.get('/:pid', async (req, res) => {
 productsRouter.post('/', async (req, res) => {
 	const product = req.body;
 	try {
-		const productAdd = await productsService.addProductMdb(product);
+		const productAdd = await productsService.addProduct(product);
 		res.send(productAdd);
-		io.emit(
-			'product_list_updated',
-			await productsService.getAllProductsMdb()
-		);
+		io.emit('product_list_updated', await productsService.getProducts());
 	} catch (err) {
 		res.status(500).send({ err });
 	}
@@ -50,7 +47,7 @@ productsRouter.post('/', async (req, res) => {
 productsRouter.put('/:pid', async (req, res) => {
 	const pid = req.params.pid;
 	try {
-		const product = await productsService.updateProductMdb(pid, req.body);
+		const product = await productsService.updateProduct(pid, req.body);
 		res.status(201).send(product);
 	} catch (err) {
 		res.status(500).send({ err });
@@ -60,12 +57,9 @@ productsRouter.put('/:pid', async (req, res) => {
 productsRouter.delete('/:pid', async (req, res) => {
 	const pid = req.params.pid;
 	try {
-		await productsService.removeProductMdb(pid);
+		await productsService.deleteProduct(pid);
 		res.sendStatus(204);
-		io.emit(
-			'product_list_updated',
-			await productsService.getAllProductsMdb()
-		);
+		io.emit('product_list_updated', await productsService.getProducts());
 	} catch (err) {
 		res.status(500).send({ err });
 	}

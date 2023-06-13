@@ -6,11 +6,8 @@ const viewsRouter = Router();
 
 viewsRouter.get('/', async (req, res) => {
 	try {
-		const productsMdb = await productsService.getAllProductsMdb();
-		res.render('products', {
-			title: 'Lista de Productos',
-			productsMdb: productsMdb,
-		});
+		const productsMdb = await productsService.getProducts();
+		res.render('home', productsMdb);
 	} catch (err) {
 		res.status(500).send({ err });
 	}

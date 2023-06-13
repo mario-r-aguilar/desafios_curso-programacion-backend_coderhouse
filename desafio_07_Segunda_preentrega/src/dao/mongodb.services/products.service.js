@@ -5,13 +5,7 @@ class ProductsService {
 		this.model = productModel;
 	}
 
-	async getAllProductsMdb(
-		limit = 10,
-		page = 1,
-		sort,
-		category = false,
-		status
-	) {
+	async getProducts(limit = 10, page = 1, sort, category = false, status) {
 		let filter = {};
 
 		if (category) {
@@ -30,19 +24,19 @@ class ProductsService {
 		});
 	}
 
-	async addProductMdb(product) {
+	async addProduct(product) {
 		return await this.model.create(product);
 	}
 
-	async updateProductMdb(pid, product) {
+	async updateProduct(pid, product) {
 		return await this.model.updateOne({ _id: pid }, product);
 	}
 
-	async removeProductMdb(productId) {
+	async deleteProduct(productId) {
 		return this.model.deleteOne({ _id: productId });
 	}
 
-	async getProductByIDMdb(productId) {
+	async getProductByID(productId) {
 		return await this.model.findOne({ _id: productId });
 	}
 }

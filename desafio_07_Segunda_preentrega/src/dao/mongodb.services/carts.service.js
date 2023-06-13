@@ -10,22 +10,22 @@ class CartsService {
 		return await this.model.find();
 	}
 
-	async getCartByIdMdb(cartId) {
+	async getCartById(cartId) {
 		return await this.model.findById(cartId);
 	}
 
-	async addCartMdb(cart) {
+	async addCart(cart) {
 		return await this.model.create(cart);
 	}
 
-	async addProductToCartMdb(cartId, productId) {
+	async addProductToCart(cartId, productId) {
 		const cart = await this.model.findOne({ _id: cartId });
-		const product = await productsService.getProductByIDMdb(productId);
+		const product = await productsService.getProductByID(productId);
 		cart.products.push(product);
 		return await cart.save();
 	}
 
-	async updateCartProductsMdb(cartId, products) {
+	async updateCartProducts(cartId, products) {
 		try {
 			const updatedCart = await this.model.findByIdAndUpdate(
 				cartId,
@@ -38,7 +38,7 @@ class CartsService {
 		}
 	}
 
-	async updateProductQuantityMdb(cartId, productId, quantity) {
+	async updateProductQuantity(cartId, productId, quantity) {
 		const cart = await this.model.findOne({ _id: cartId });
 		const productIndex = cart.products.findIndex(
 			(product) => product._id.toString() === productId
@@ -52,7 +52,7 @@ class CartsService {
 		}
 	}
 
-	async removeProductFromCartMdb(cartId, productId) {
+	async removeProductFromCart(cartId, productId) {
 		const cart = await this.model.findOne({ _id: cartId });
 		cart.products = cart.products.filter(
 			(product) => product._id.toString() !== productId
@@ -60,7 +60,7 @@ class CartsService {
 		return await cart.save();
 	}
 
-	async deleteCartMdb(cartId) {
+	async deleteCart(cartId) {
 		return await this.model.findByIdAndDelete(cartId);
 	}
 }
