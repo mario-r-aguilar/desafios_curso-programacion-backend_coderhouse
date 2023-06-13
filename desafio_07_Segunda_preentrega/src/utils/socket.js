@@ -4,6 +4,7 @@ import http from 'http';
 // usar con fs [solo habilitar si no se utiliza mongodb]
 // import { listOfProducts } from './instances.js';
 import { productsService } from '../dao/products.service.js';
+import { messagesService } from '../dao/messages.service.js';
 
 // inicializo express y server.io
 export const app = express();
@@ -16,6 +17,7 @@ io.on('connection', async (socket) => {
 	// usar con fs [solo habilitar si no se utiliza mongodb]
 	//socket.emit('product_list', await listOfProducts.getProducts());
 	socket.emit('product_list', await productsService.getAllProductsMdb());
+	socket.emit('messages_init', messagesService.getAllMessages());
 
 	socket.on('disconnect', () => {
 		console.log('Cliente desconectado..');
