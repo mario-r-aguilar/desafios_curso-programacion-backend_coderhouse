@@ -2,8 +2,8 @@
 	<div id='messages'></div>
 </div>
 <form action='/api/chat/' method='post'>
-	<input type='text' id='message' />
-	<input type='text' id='email' />
+	<input type='text' placeholder='Mensaje' id='message' name='message' />
+	<input type='email' placeholder='Correo' id='email' name='email' />
 	<button id='send' onclick='sendMenssage()'>Enviar</button>
 </form>
 
