@@ -3,8 +3,8 @@ import express from 'express';
 import http from 'http';
 // usar con fs [solo habilitar si no se utiliza mongodb]
 // import { listOfProducts } from './instances.js';
-import { productsService } from '../dao/products.service.js';
-import { messagesService } from '../dao/messages.service.js';
+import { productsService } from '../dao/mongodb.services/products.service.js';
+import { messagesService } from '../dao/mongodb.services/messages.service.js';
 
 // inicializo express y server.io
 export const app = express();

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { messagesService } from '../dao/messages.service.js';
+import { messagesService } from '../../dao/mongodb.services/messages.service.js';
 
 const messagesRouter = Router();
 

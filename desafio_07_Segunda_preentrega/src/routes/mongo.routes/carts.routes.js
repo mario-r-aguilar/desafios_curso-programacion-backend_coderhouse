@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { cartsService } from '../dao/carts.service.js';
-import { productsService } from '../dao/products.service.js';
+import { cartsService } from '../../dao/mongodb.services/carts.service.js';
+import { productsService } from '../../dao/mongodb.services/products.service.js';
 
 const cartsRouter = Router();
 

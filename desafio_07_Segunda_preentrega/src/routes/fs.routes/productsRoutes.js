@@ -1,7 +1,7 @@
 // Importo Router y productsManager para utilizar sus métodos
 import { Router } from 'express';
-import { listOfProducts } from '../utils/instances.js';
-import { io } from '../utils/socket.js';
+import { listOfProducts } from '../../utils/instances.js';
+import { io } from '../../utils/socket.js';
 
 const productsRoutes = Router();
 

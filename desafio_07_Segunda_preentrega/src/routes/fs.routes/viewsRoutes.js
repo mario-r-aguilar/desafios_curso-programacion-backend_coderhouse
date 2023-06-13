@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { listOfProducts } from '../utils/instances.js';
+import { listOfProducts } from '../../utils/instances.js';
 
 const viewsRoutes = Router();
 

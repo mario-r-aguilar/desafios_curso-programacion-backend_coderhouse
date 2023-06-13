@@ -1,5 +1,5 @@
-import { messageModel } from './models/message.model.js';
-import { io } from '../utils/socket.js';
+import { messageModel } from '../models/message.model.js';
+import { io } from '../../utils/socket.js';
 
 class MessagesService {
 	constructor() {

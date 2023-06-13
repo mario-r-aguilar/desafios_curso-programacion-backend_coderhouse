@@ -5,15 +5,15 @@ import handlebars from 'express-handlebars';
 import mongoose from 'mongoose';
 
 // importo rutas fs [solo habilitar si las rutas de mongodb están comentadas]
-//import productsRoutes from './routes/productsRoutes.js';
-//import cartsRoutes from './routes/cartsRoutes.js';
-//import viewsRoutes from './routes/viewsRoutes.js';
+// import productsRoutes from './routes/fs.routes/productsRoutes.js';
+// import cartsRoutes from './routes/fs.routes/cartsRoutes.js';
+// import viewsRoutes from './routes/fs.routes/viewsRoutes.js';
 
 // importo rutas mongodb
-import productsRouter from './routes/products.routes.js';
-import cartsRouter from './routes/carts.routes.js';
-import messagesRouter from './routes/messages.routes.js';
-import viewsRouter from './routes/views.routes.js';
+import productsRouter from './routes/mongo.routes/products.routes.js';
+import cartsRouter from './routes/mongo.routes/carts.routes.js';
+import messagesRouter from './routes/mongo.routes/messages.routes.js';
+import viewsRouter from './routes/mongo.routes/views.routes.js';
 
 // seteo middlewares obligatorios
 app.use(express.json());

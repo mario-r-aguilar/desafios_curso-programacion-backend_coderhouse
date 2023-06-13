@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 
 export default class ProductsController {
 	constructor() {
-		this.path = './src/dao/models/products.json';
+		this.path = './src/dao/fs.controllers/json/products.json';
 	}
 
 	// Metodos privados

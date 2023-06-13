@@ -1,6 +1,6 @@
 // Importo Router y cartsManager para utilizar sus métodos
 import { Router } from 'express';
-import { listOfCarts } from '../utils/instances.js';
+import { listOfCarts } from '../../utils/instances.js';
 
 const cartsRoutes = Router();
 

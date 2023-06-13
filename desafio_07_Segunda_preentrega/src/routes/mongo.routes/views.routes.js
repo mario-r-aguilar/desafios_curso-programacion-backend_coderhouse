@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { productsService } from '../dao/products.service.js';
-import { messagesService } from '../dao/messages.service.js';
+import { productsService } from '../../dao/mongodb.services/products.service.js';
+import { messagesService } from '../../dao/mongodb.services/messages.service.js';
 
 const viewsRouter = Router();
 
