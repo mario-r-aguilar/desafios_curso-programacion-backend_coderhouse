@@ -1,0 +1,80 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--gradient: linear-gradient(135deg, #008bf6, #06f599d2);
+	--p-color: #008bf6;
+	--radius: 25px;
+	--shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	--shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+body {
+	background-color: rgb(54, 125, 138);
+}
+
+h1,
+h2,
+h3,
+p {
+	margin: 1rem;
+}
+
+a {
+	text-decoration: none;
+	color: #fff;
+}
+
+a:hover {
+	color: #fff;
+}
+
+section {
+	margin: 100px;
+}
+
+.bg-light {
+	background: #fff;
+	box-shadow: var(--shadow);
+}
+
+.login-section {
+	margin: 50px 20px;
+	border-radius: var(--radius);
+}
+
+.navbar {
+	margin: 10px;
+	border-radius: var(--radius);
+}
+
+.form-control {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: var(--radius);
+	border: 0px;
+	border-bottom: 1px solid var(--p-color);
+}
+
+.btn-primary {
+	background: var(--gradient);
+	border-radius: var(--radius);
+	border: 0;
+}
+
+.btn-outline-danger {
+	border-radius: var(--radius);
+}
+
+.btn {
+	margin-bottom: 1rem;
+}
+
+.grettingUser {
+	margin-right: 15rem;
+}
+
+.card {
+	margin: 0.5rem;
+}

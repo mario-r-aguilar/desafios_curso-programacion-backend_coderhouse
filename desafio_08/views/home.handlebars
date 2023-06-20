@@ -1,0 +1,43 @@
+<div>
+<div class='container'>
+	<h1>Lista de Productos</h1>
+			
+	<div class='row'>
+		{{#each productsMdb.docs}}
+		<div class="col-md-3">
+			<div class="card">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item"><b>Nombre:</b> {{this.title}}</li>
+				<li class="list-group-item"><b>Descripción:</b> {{this.description}}</li>
+				<li class="list-group-item"><b>Código:</b> {{this.code}}</li>
+				<li class="list-group-item"><b>Precio:</b> {{this.price}}</li>
+				<li class="list-group-item"><b>Stock:</b> {{this.stock}}</li>
+				<li class="list-group-item"><b>Categoría:</b> {{this.category}}</li>
+				{{#if this.thumbnails}}
+				<li class="list-group-item"><b>Fotos:</b> {{this.thumbnails}}</li>
+			{{/if}}
+			</ul>
+			</div>
+		</div>
+		{{/each}}
+			<div class="col-12 text-center">
+			<nav>
+				<ul class="pagination">
+					{{#if hasPrevPage}} <li class="page-item"> {{else}}<li class="page-item disabled">{{/if}}
+					<a class="page-link" href="?limit={{limit}}&page={{prevPage}}&sort={{sort}}&category={{category}}">Previous</a>
+					</li>
+					<li class="page-item active" aria-current="page">
+					<a class="page-link" href="#">{{ page }}</a>
+					</li>
+					{{#if hasNextPage}} <li class="page-item"> {{else}}<li class="page-item disabled">{{/if}}
+					<a class="page-link" href="?limit={{limit}}&page={{nextPage}}&sort={{sort}}&category={{category}}">Next</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+
+	</div>
+
+
+</div>
+</div>
