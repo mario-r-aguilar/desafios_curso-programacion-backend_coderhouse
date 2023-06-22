@@ -11,7 +11,8 @@ function sendMenssage() {
 function render(data) {
 	const html = data
 		.map((elem) => {
-			return `${elem.user}`;
+			return `${elem.user}
+			${elem.message}`;
 		})
 		.join(' ');
 
