@@ -9,14 +9,12 @@ function sendMenssage() {
 }
 
 function render(data) {
-	// Genero el html
-	const html = data.forEach((elem) => {
-		// Recorro el array de mensajes y genero el html
-		`<div>
-                <em>${elem}</em>
-            </div>`;
-	});
-	// Inserto el html en el elemento con id messages
+	const html = data
+		.map((elem) => {
+			return `${elem.user}`;
+		})
+		.join(' ');
+
 	document.getElementById('messages').innerHTML = html;
 }
 

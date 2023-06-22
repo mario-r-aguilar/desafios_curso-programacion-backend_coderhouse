@@ -20,13 +20,13 @@ io.on('connection', async (socket) => {
 	//socket.emit('product_list', await listOfProducts.getProducts());
 
 	socket.emit('product_list', await productsService.getProducts());
-	socket.emit('messages', messagesService.getAllMessages());
+	socket.emit('messages', await messagesService.getAllMessages());
 
 	// Escucho los mensajes enviado por el cliente y se los propago a todos
-	socket.on('new-message', (message) => {
+	socket.on('new-message', async (message) => {
 		messagesService.addMessage(message);
 		// Propago el evento a todos los clientes conectados
-		io.emit('messages', messagesService.getAllMessages());
+		io.emit('messages', await messagesService.getAllMessages());
 
 		socket.on('disconnect', () => {
 			console.log('Cliente desconectado..');
